@@ -59,7 +59,7 @@ class ParameterDiff implements Diff
         
         if ($head->default) {
             if (!$base->default) {
-                return Status::INTERNAL_CHANGES;
+                return Status::API_ADDITIONS;
             }
             
             return (new ExpressionDiff($base->default, $head->default))

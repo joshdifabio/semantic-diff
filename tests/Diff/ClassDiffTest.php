@@ -187,6 +187,25 @@ CODE
                 ,
             ],
             [
+                Status::API_ADDITIONS,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar = null) {}
+}
+CODE
+                ,
+            ],
+            [
                 Status::INCOMPATIBLE_API,
                 <<<CODE
 <?php
