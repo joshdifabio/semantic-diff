@@ -1,0 +1,28 @@
+{
+    "name": "joshdifabio/semantic-diff",
+    "description": "A library for performing semantic diffs of PHP code",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joshua Di Fabio",
+            "email": "joshdifabio@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "nikic/php-parser": "~1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "SemanticDiff\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SemanticDiff\\": "tests"
+        }
+    }
+}
