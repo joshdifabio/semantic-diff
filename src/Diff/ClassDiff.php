@@ -3,11 +3,11 @@ namespace SemanticDiff\Diff;
 
 use SemanticDiff\Diff;
 use SemanticDiff\Status;
-use PhpParser\Node\Stmt\Class_ as ClassNode;
-use PhpParser\Node\Stmt\ClassConst as ClassConstNode;
-use PhpParser\Node\Const_ as ConstNode;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Const_ as Const_;
 use PhpParser\Node\Stmt\Property as PropertyNode;
-use PhpParser\Node\Stmt\ClassMethod as ClassMethodNode;
+use PhpParser\Node\Stmt\ClassMethod;
 use SemanticDiff\Property;
 
 /**
@@ -21,7 +21,7 @@ class ClassDiff implements Diff
     private $propertyDiffs;
     private $methodDiffs;
     
-    public function __construct(ClassNode $base = null, ClassNode $head = null)
+    public function __construct(Class_ $base = null, Class_ $head = null)
     {
         if (!$base && !$head) {
             throw new \LogicException('At least one class node must be provided');
@@ -95,12 +95,12 @@ class ClassDiff implements Diff
         if (is_null($this->constantDiffs)) {
             $this->constantDiffs = $this->createDiffs(
                 'Stmt_ClassConst',
-                function (ClassConstNode $classConstNode) {
-                    foreach ($classConstNode->consts as $constNode) {
-                        yield $constNode->name => $constNode;
+                function (ClassConst $ClassConst) {
+                    foreach ($ClassConst->consts as $Const_) {
+                        yield $Const_->name => $Const_;
                     }
                 },
-                function (ConstNode $base = null, ConstNode $workingCopy = null) {
+                function (Const_ $base = null, Const_ $workingCopy = null) {
                     return new ConstantDiff($base, $workingCopy);
                 }
             );
@@ -143,10 +143,10 @@ class ClassDiff implements Diff
         if (is_null($this->methodDiffs)) {
             $this->methodDiffs = $this->createDiffs(
                 'Stmt_ClassMethod',
-                function (ClassMethodNode $node) {
+                function (ClassMethod $node) {
                     yield $node->name => $node;
                 },
-                function (ClassMethodNode $base = null, ClassMethodNode $workingCopy = null) {
+                function (ClassMethod $base = null, ClassMethod $workingCopy = null) {
                     return new MethodDiff($base, $workingCopy);
                 }
             );
