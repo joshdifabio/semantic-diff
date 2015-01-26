@@ -19,10 +19,6 @@ class ParameterDiff implements Diff
             throw new \LogicException('At least one param node must be provided');
         }
         
-        if (!$head) {
-            throw new \Exception('lolz');
-        }
-        
         $this->base = $base;
         $this->head = $head;
     }
