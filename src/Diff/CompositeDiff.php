@@ -110,17 +110,12 @@ class CompositeDiff implements Diff
     {
         $namedNodes = [];
         
-        foreach ($baseNodes as $key => $node) {
-            if (isset($node->name)) {
-                $namedNodes[$node->getType()][(string)$node->name][0] = $node;
-                unset($baseNodes[$key]);
-            }
-        }
-        
-        foreach ($headNodes as $key => $node) {
-            if (isset($node->name)) {
-                $namedNodes[$node->getType()][(string)$node->name][1] = $node;
-                unset($headNodes[$key]);
+        foreach ([&$baseNodes, &$headNodes] as $nodeSetKey => &$nodeSet) {
+            foreach ($nodeSet as $nodeKey => $node) {
+                if (isset($node->name)) {
+                    $namedNodes[$node->getType()][(string)$node->name][$nodeSetKey] = $node;
+                    unset($nodeSet[$nodeKey]);
+                }
             }
         }
         
