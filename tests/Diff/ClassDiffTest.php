@@ -12,12 +12,20 @@ use SemanticDiff\Status;
  */
 class ClassDiffTest extends PHPUnit_Framework_TestCase
 {
+    private $factory;
+    
+    public function setUp()
+    {
+        $this->factory = new Factory;
+    }
+    
     /**
      * @dataProvider provideGetStatus
      */
     public function testGetStatus($expectedStatus, Class_ $base = null, Class_ $head = null)
     {
-        $this->assertEquals($expectedStatus, (new ClassDiff($base, $head))->getStatus());
+        $diff = $this->factory->createDiff($base, $head);
+        $this->assertEquals($expectedStatus, $diff->getStatus());
     }
     
     public function provideGetStatus()
@@ -420,6 +428,25 @@ CODE
 class Foo
 {
     public function helloWorld(\$foobar = 1) {}
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar = null) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar = null) { return 1; }
 }
 CODE
                 ,

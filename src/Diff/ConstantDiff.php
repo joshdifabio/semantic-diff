@@ -1,28 +1,13 @@
 <?php
 namespace SemanticDiff\Diff;
 
-use SemanticDiff\Diff;
-use PhpParser\Node\Const_;
 use SemanticDiff\Status;
 
 /**
  * @author Joshua Di Fabio <joshdifabio@gmail.com>
  */
-class ConstantDiff implements Diff
+class ConstantDiff extends AbstractDiff
 {
-    private $base;
-    private $head;
-    
-    public function __construct(Const_ $base = null, Const_ $head = null)
-    {
-        if (!$base && !$head) {
-            throw new \LogicException('At least one const node must be provided');
-        }
-        
-        $this->base = $base;
-        $this->head = $head;
-    }
-    
     public function getStatus()
     {
         $base = $this->base;
@@ -36,7 +21,7 @@ class ConstantDiff implements Diff
             return Status::INCOMPATIBLE_API;
         }
         
-        return (new ExpressionDiff($base->value, $head->value))
+        return $this->factory->createDiff($base->value, $head->value)
             ->getStatus() ? Status::API_CHANGES : Status::NO_CHANGES;
     }
 }
