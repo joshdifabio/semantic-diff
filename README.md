@@ -24,8 +24,10 @@ $diff = (new Factory)->createDiff(
     $phpParser->parse($newPhpCode)
 );
 
+$diff->getStatus();
+
 /*
- * $diff->getStatus() now returns one of:
+ * $diff->getStatus() returns one of:
  *  Status::NO_CHANGES
  *  Status::API_ADDITIONS
  *  Status::INTERNAL_CHANGES
