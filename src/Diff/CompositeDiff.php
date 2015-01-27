@@ -90,7 +90,7 @@ class CompositeDiff implements Diff
                     
                 case 'Stmt_Property':
                     foreach ($node->props as $prop) {
-                        $_prop = new Property($node->type);
+                        $_prop = new Property($node->type, []);
                         $_prop->name = $prop->name;
                         $_prop->default = $prop->default;
                         $flattened[] = $_prop;

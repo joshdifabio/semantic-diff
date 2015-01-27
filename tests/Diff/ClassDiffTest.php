@@ -451,6 +451,137 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foobar;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foobar;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foobar;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foobar;
+}
+CODE
+                ,
+            ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    public \$foobar;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foobar;
+}
+CODE
+                ,
+            ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public \$foobar = 'hello';
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public \$foobar;
+}
+CODE
+                ,
+            ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foobar = 'hello';
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foobar;
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foobar = 'hello';
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foobar;
+}
+CODE
+                ,
+            ],
         ];
     }
 }

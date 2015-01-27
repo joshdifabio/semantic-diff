@@ -37,8 +37,11 @@ class Factory
             case 'Param':
                 return new ParameterDiff($this, $base, $head);
                 
+            case 'Stmt_Property':
+                return new PropertyDiff($this, $base, $head);
+                
             case 'array':
-                return new CompositeDiff($this, $base, $head);
+                return new CompositeDiff($this, $base ?: [], $head ?: []);
                 
             case 'scalar':
                 return new StringDiff($this, (string)$base, (string)$head);
