@@ -1,9 +1,7 @@
-Semantic Diff
-=============
+Semantic Diff for PHP
+=====================
 
-Semantic diffs for PHP code.
-
-[![Build Status](https://travis-ci.org/joshdifabio/semantic-diff.svg)](https://travis-ci.org/joshdifabio/semantic-diff)
+[![Build Status](https://img.shields.io/travis/joshdifabio/semantic-diff.svg?style=flat)](https://travis-ci.org/joshdifabio/semantic-diff) [![Coveralls](https://img.shields.io/coveralls/joshdifabio/semantic-diff.svg?style=flat)](https://coveralls.io/r/joshdifabio/semantic-diff)
 
 API status
 ----------
@@ -26,10 +24,10 @@ $diff = (new Factory)->createDiff(
     $phpParser->parse($newPhpCode)
 );
 
-$diff->getStatus();
+$status = $diff->getStatus();
 
 /*
- * $diff->getStatus() returns one of:
+ * $status is now one of:
  *  Status::NO_CHANGES
  *  Status::API_ADDITIONS
  *  Status::INTERNAL_CHANGES
