@@ -25,6 +25,5 @@
         "psr-4": {
             "SemanticDiff\\": "tests"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
