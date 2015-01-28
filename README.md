@@ -3,6 +3,8 @@ Semantic Diff
 
 Semantic diffs for PHP code.
 
+[![Build Status](https://travis-ci.org/joshdifabio/semantic-diff.svg)](https://travis-ci.org/joshdifabio/semantic-diff)
+
 API status
 ----------
 
