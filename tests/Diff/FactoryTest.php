@@ -1133,6 +1133,31 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::NO_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld()
+    {
+        list(,,,\$hello) = [1,2,3,4];
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld()
+    {
+        list(,,,\$hello) = [1,2,3,4];
+    }
+}
+CODE
+                ,
+            ],
         ];
     }
 }

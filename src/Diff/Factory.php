@@ -12,7 +12,7 @@ class Factory
     {
         if (is_null($base)) {
             if (is_null($head)) {
-                throw new \LogicException('At least one node must be provided');
+                return new NullDiff;
             }
             
             $type = $this->getType($head);
