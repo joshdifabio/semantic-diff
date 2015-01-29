@@ -35,7 +35,7 @@ class ClassDiff extends AbstractDiff
             $status = Status::NO_CHANGES;
         }
         
-        $composite = $this->factory->createDiff($this->base->stmts, $this->head->stmts);
+        $composite = $this->factory->createDiff($this->base->stmts ?: [], $this->head->stmts ?: []);
         
         return max($status, $composite->getStatus());
     }
