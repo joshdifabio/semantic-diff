@@ -2,7 +2,6 @@
 namespace SemanticDiff\Diff;
 
 use PHPUnit_Framework_TestCase;
-use PhpParser\Node\Stmt\Class_;
 use PhpParser\Parser;
 use PhpParser\Lexer;
 use SemanticDiff\Status;
@@ -10,7 +9,7 @@ use SemanticDiff\Status;
 /**
  * @author Joshua Di Fabio <joshdifabio@gmail.com>
  */
-class ClassDiffTest extends PHPUnit_Framework_TestCase
+class FactoryTest extends PHPUnit_Framework_TestCase
 {
     private $factory;
     
@@ -22,7 +21,7 @@ class ClassDiffTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideGetStatus
      */
-    public function testGetStatus($expectedStatus, Class_ $base = null, Class_ $head = null)
+    public function testGetStatus($expectedStatus, array $base = null, array $head = null)
     {
         $diff = $this->factory->createDiff($base, $head);
         $this->assertEquals($expectedStatus, $diff->getStatus());
@@ -33,27 +32,10 @@ class ClassDiffTest extends PHPUnit_Framework_TestCase
         $parser = new Parser(new Lexer);
         
         foreach ($this->getTestCases() as $testId => $testCase) {
-            $baseClassNode = null;
-            $headClassNode = null;
-            
-            foreach ($parser->parse($testCase[1]) as $node) {
-                if ($node instanceof Class_) {
-                    $baseClassNode = $node;
-                    break;
-                }
-            }
-            
-            foreach ($parser->parse($testCase[2]) as $node) {
-                if ($node instanceof Class_) {
-                    $headClassNode = $node;
-                    break;
-                }
-            }
-            
             yield $testId => [
                 $testCase[0],
-                $baseClassNode,
-                $headClassNode,
+                $parser->parse($testCase[1]),
+                $parser->parse($testCase[2]),
             ];
         }
     }
@@ -578,6 +560,33 @@ CODE
 class Foo
 {
     private \$foobar;
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+namespace Foo;
+
+class Bar
+{
+    private \$foobar = 'hello';
+}
+
+echo "Hello world!";
+CODE
+                ,
+                <<<CODE
+<?php
+namespace Foo;
+
+echo "Hello world!";
+
+class Bar
+{
+    
 }
 CODE
                 ,

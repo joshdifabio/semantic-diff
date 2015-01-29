@@ -58,8 +58,12 @@ class CompositeDiff implements Diff
                 $this->defaultStatus = Status::INTERNAL_CHANGES;
             }
             
-            foreach ($base as $key => $baseNode) {
-                $diffs[] = $this->factory->createDiff($baseNode, $head[$key]);
+            reset($base);
+            reset($head);
+            while (false !== current($base)) {
+                $diffs[] = $this->factory->createDiff(current($base), current($head));
+                next($base);
+                next($head);
             }
             
             $this->innerDiffs = $diffs;
