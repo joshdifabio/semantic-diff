@@ -1057,6 +1057,25 @@ class Maged_View
 CODE
                 ,
             ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobaz) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar) {}
+}
+CODE
+                ,
+            ],
         ];
     }
 }
