@@ -116,7 +116,7 @@ class CompositeDiff implements Diff
         
         foreach ([&$baseNodes, &$headNodes] as $nodeSetKey => &$nodeSet) {
             foreach ($nodeSet as $nodeKey => $node) {
-                if (isset($node->name)) {
+                if (isset($node->name) && is_string($node->name)) {
                     $namedNodes[$node->getType()][(string)$node->name][$nodeSetKey] = $node;
                     unset($nodeSet[$nodeKey]);
                 }
