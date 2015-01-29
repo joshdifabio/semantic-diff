@@ -58,11 +58,11 @@ class MethodDiff extends AbstractDiff
             return Status::INCOMPATIBLE_API;
         }
         
-        $status = $this->factory->createDiff($this->base->params, $this->head->params)
+        $status = $this->factory->createDiff($this->base->params ?: [], $this->head->params ?: [])
             ->getStatus();
         
         if ($status == Status::NO_CHANGES) {
-            $status = $this->factory->createDiff($this->base->stmts, $this->head->stmts)
+            $status = $this->factory->createDiff($this->base->stmts ?: [], $this->head->stmts ?: [])
                 ->getStatus();
         }
         
