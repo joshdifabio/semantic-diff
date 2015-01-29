@@ -16,19 +16,20 @@ class ClassDiff extends AbstractDiff
         
         if (
             !$this->head
-            || !$this->base->isAbstract() && $this->head->isAbstract()
-            || !$this->base->isFinal() && $this->head->isFinal()
-            || (string)$this->base->extends !== (string)$this->head->extends
-            || count($this->base->implements) != count($this->head->implements)
+            || (!$this->base->isAbstract() && $this->head->isAbstract())
+            || (!$this->base->isFinal() && $this->head->isFinal())
+            || ($this->base->extends && (string)$this->base->extends !== (string)$this->head->extends)
+            || count($this->base->implements) > count($this->head->implements)
             || array_diff($this->toStrings($this->base->implements), $this->toStrings($this->head->implements))
         ) {
             return Status::INCOMPATIBLE_API;
         }
         
         if (
-            array_diff($this->head->implements, $this->base->implements)
-            || $this->base->isAbstract() && !$this->head->isAbstract()
-            || $this->base->isFinal() && !$this->head->isFinal()
+            ($this->base->isAbstract() && !$this->head->isAbstract())
+            || (!$this->base->extends && $this->head->extends)
+            || ($this->base->isFinal() && !$this->head->isFinal())
+            || array_diff($this->toStrings($this->head->implements), $this->toStrings($this->base->implements))
         ) {
             $status = Status::API_CHANGES;
         } else {

@@ -53,11 +53,22 @@ class PropertyDiff extends AbstractDiff
             return Status::INCOMPATIBLE_API;
         }
         
-        if ($base->default !== $head->default) {
+        if ($base->default && $head->default) {
+            $defaultValueDiff = $this->factory->createDiff($base->default, $head->default);
+            if ($defaultValueDiff->getStatus()) {
+                if ($head->isPrivate()) {
+                    return Status::INTERNAL_CHANGES;
+                }
+
+                return Status::API_CHANGES;
+            }
+        }
+        
+        if ((bool)$base->default != (bool)$head->default) {
             if ($head->isPrivate()) {
                 return Status::INTERNAL_CHANGES;
             }
-            
+
             return Status::API_CHANGES;
         }
         
