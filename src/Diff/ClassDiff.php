@@ -16,11 +16,11 @@ class ClassDiff extends AbstractDiff
         
         if (
             !$this->head
-            || $this->base->extends !== $this->head->extends
-            || count($this->base->implements) != count($this->head->implements)
-            || array_diff($this->base->implements, $this->head->implements)
             || !$this->base->isAbstract() && $this->head->isAbstract()
             || !$this->base->isFinal() && $this->head->isFinal()
+            || (string)$this->base->extends !== (string)$this->head->extends
+            || count($this->base->implements) != count($this->head->implements)
+            || array_diff($this->toStrings($this->base->implements), $this->toStrings($this->head->implements))
         ) {
             return Status::INCOMPATIBLE_API;
         }
@@ -38,5 +38,16 @@ class ClassDiff extends AbstractDiff
         $composite = $this->factory->createDiff($this->base->stmts ?: [], $this->head->stmts ?: []);
         
         return max($status, $composite->getStatus());
+    }
+    
+    private function toStrings(array $stringables)
+    {
+        $strings = [];
+        
+        foreach ($stringables as $stringable) {
+            $strings[] = (string)$stringable;
+        }
+        
+        return $strings;
     }
 }
