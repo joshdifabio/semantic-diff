@@ -22,7 +22,7 @@ class ParameterDiff extends AbstractDiff
         }
         
         if (!$head) {
-            return Status::INTERNAL_CHANGES;
+            return Status::API_CHANGES;
         }
         
         if (
@@ -35,18 +35,23 @@ class ParameterDiff extends AbstractDiff
         }
         
         if ($base->name !== $head->name) {
-            return Status::INTERNAL_CHANGES;
+            $status = Status::INTERNAL_CHANGES;
+        } else {
+            $status = Status::NO_CHANGES;
         }
         
         if ($head->default) {
             if (!$base->default) {
-                return Status::API_ADDITIONS;
+                return max($status, Status::API_ADDITIONS);
             }
             
-            return $this->factory->createDiff($base->default, $head->default)
-                ->getStatus() ? Status::API_CHANGES : Status::NO_CHANGES;
+            $status = max(
+                $status,
+                $this->factory->createDiff($base->default, $head->default)
+                    ->getStatus() ? Status::API_CHANGES : Status::NO_CHANGES
+            );
         }
         
-        return Status::NO_CHANGES;
+        return $status;
     }
 }

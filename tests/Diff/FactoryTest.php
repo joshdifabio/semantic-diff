@@ -1076,6 +1076,63 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobaz = 1) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobar = 2) {}
+}
+CODE
+                ,
+            ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobaz = 1) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld() {}
+}
+CODE
+                ,
+            ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld(\$foobaz) {}
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld() {}
+}
+CODE
+                ,
+            ],
         ];
     }
 }
