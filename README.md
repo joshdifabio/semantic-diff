@@ -1,7 +1,7 @@
 Semantic Diff for PHP
 =====================
 
-[![Build Status](https://img.shields.io/travis/joshdifabio/semantic-diff.svg?style=flat)](https://travis-ci.org/joshdifabio/semantic-diff) [![Coveralls](https://img.shields.io/coveralls/joshdifabio/semantic-diff.svg?style=flat)](https://coveralls.io/r/joshdifabio/semantic-diff)
+[![Build Status](https://img.shields.io/travis/joshdifabio/semantic-diff.svg?style=flat)](https://travis-ci.org/joshdifabio/semantic-diff) [![Coveralls](https://img.shields.io/coveralls/joshdifabio/semantic-diff.svg?style=flat)](https://coveralls.io/r/joshdifabio/semantic-diff) [![Codacy Badge](https://img.shields.io/codacy/5e498265acf942d9b437b362247b0145.svg?style=flat)](https://www.codacy.com/public/joshdifabio/semantic-diff)
 
 API status
 ----------
