@@ -34,39 +34,22 @@ class CompositeDiff implements Diff
             $this->status = $status;
         }
         
-        return $this->status;
+        return $status;
     }
     
     public function getInnerDiffs()
     {
         if (is_null($this->innerDiffs)) {
-            $diffs = [];
-
-            $base = $this->flatten($this->base);
-            $head = $this->flatten($this->head);
-
-            foreach ($this->extractNamedNodes($base, $head) as $type => $nodes) {
-                foreach ($nodes as $name => $baseAndHeadNodes) {
-                    $diffs[] = $this->factory->createDiff(
-                        isset($baseAndHeadNodes[0]) ? $baseAndHeadNodes[0] : null,
-                        isset($baseAndHeadNodes[1]) ? $baseAndHeadNodes[1] : null
-                    );
-                }
-            }
+            $base = $this->flattenNodes($this->base);
+            $head = $this->flattenNodes($this->head);
+            
+            $diffs = $this->extractAndDiffNamedNodes($base, $head);
 
             if (count($base) !== count($head)) {
                 $this->defaultStatus = Status::INTERNAL_CHANGES;
             }
             
-            reset($base);
-            reset($head);
-            while (false !== current($base)) {
-                $diffs[] = $this->factory->createDiff(current($base), current($head));
-                next($base);
-                next($head);
-            }
-            
-            $this->innerDiffs = $diffs;
+            $this->innerDiffs = array_merge($diffs, $this->getDiffs($base, $head));
             unset($this->base);
             unset($this->head);
         }
@@ -74,7 +57,7 @@ class CompositeDiff implements Diff
         return $this->innerDiffs;
     }
     
-    private function flatten(array $nodes)
+    private function flattenNodes(array $nodes)
     {
         $flattened = [];
         
@@ -108,6 +91,37 @@ class CompositeDiff implements Diff
         }
         
         return $flattened;
+    }
+    
+    private function getDiffs(array $baseNodes, array $headNodes)
+    {
+        $diffs = [];
+        
+        $maxCount = max(count($baseNodes), count($headNodes));
+        for ($i = 0; $i < $maxCount; $i++) {
+            $diffs[] = $this->factory->createDiff(
+                isset($baseNodes[$i]) ? $baseNodes[$i] : null,
+                isset($headNodes[$i]) ? $headNodes[$i] : null
+            );
+        }
+        
+        return $diffs;
+    }
+    
+    private function extractAndDiffNamedNodes(array &$baseNodes, array &$headNodes)
+    {
+        $diffs = [];
+        
+        foreach ($this->extractNamedNodes($baseNodes, $headNodes) as $nodes) {
+            foreach ($nodes as $baseAndHeadNodes) {
+                $diffs[] = $this->factory->createDiff(
+                    isset($baseAndHeadNodes[0]) ? $baseAndHeadNodes[0] : null,
+                    isset($baseAndHeadNodes[1]) ? $baseAndHeadNodes[1] : null
+                );
+            }
+        }
+        
+        return $diffs;
     }
     
     private function extractNamedNodes(array &$baseNodes, array &$headNodes)
