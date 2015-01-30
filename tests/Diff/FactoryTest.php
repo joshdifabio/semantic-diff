@@ -1158,6 +1158,173 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected function helloWorld()
+    {
+        return 'baz!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected static function helloWorld()
+    {
+        return 'baz!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private static function helloWorld()
+    {
+        return 'baz!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    protected function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected static function helloWorld()
+    {
+        return 'baz!';
+    }
+}
+CODE
+                ,
+            ],
         ];
     }
 }
