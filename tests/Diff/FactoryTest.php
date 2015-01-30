@@ -1400,6 +1400,82 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foo;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private static \$foo;
+}
+CODE
+                ,
+            ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foo;
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected static \$foo;
+}
+CODE
+                ,
+            ],
+            [
+                Status::API_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foo = 'this';
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected \$foo = 'that';
+}
+CODE
+                ,
+            ],
+            [
+                Status::INTERNAL_CHANGES,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foo = 'this';
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private \$foo = 'that';
+}
+CODE
+                ,
+            ],
         ];
     }
 }
