@@ -1325,6 +1325,81 @@ class Foo
 CODE
                 ,
             ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    protected function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    public function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+            ],
+            [
+                Status::INCOMPATIBLE_API,
+                <<<CODE
+<?php
+class Foo
+{
+    protected function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+                <<<CODE
+<?php
+class Foo
+{
+    private function helloWorld()
+    {
+        return 'FOO!';
+    }
+}
+CODE
+                ,
+            ],
         ];
     }
 }
