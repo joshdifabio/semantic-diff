@@ -34,7 +34,7 @@ class CompositeDiff implements Diff
             $this->status = $status;
         }
         
-        return $status;
+        return $this->status;
     }
     
     public function getInnerDiffs()
